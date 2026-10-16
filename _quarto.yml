@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 website:
-  title: "Reanálisis Camu Camu"
-  navbar:
+  navbar: 
+    title: false
     logo: img/logo-untrm.png
     logo-alt: "Logo UNTRM"
     left:

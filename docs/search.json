@@ -4,13 +4,27 @@
     "href": "index.html",
     "title": "Métodos de injerto en diferentes genotipos y su efecto en la brotación de Myrciaria dubia (camu camu)",
     "section": "",
-    "text": "Autor de la tesis: Andy Richard Reátegui Salazar · UNAP, 2012\n\n\n\n\nDiseño: DBCA con arreglo factorial 3 × 3 (genotipo × método de injerto), 4 bloques, 36 parcelas de 10 plantas.\n\n\nVer tesis completa"
+    "text": "En pocas palabras: la tesis evaluó si el método de injerto (astilla simple, astilla doble o púa) y el genotipo de la vara yemera influyen en la brotación de injertos de camu camu. El ensayo se hizo en San Miguel (Iquitos) entre agosto de 2011 y enero de 2012, y concluyó que el injerto por púa fue el más eficaz.\n\n\n\n\n\n\n\n\n\n\nFicha técnica\n\n\n\n\n\nAutor\nAndy Richard Reátegui Salazar\n\n\nAsesor\nDr. Julio Abel Soplín Ríos\n\n\nUniversidad\nUniversidad Nacional de la Amazonía Peruana (UNAP)\n\n\nAño\n2012\n\n\nLugar\nSan Miguel, Iquitos (Loreto)\n\n\nCultivo\nCamu camu (Myrciaria dubia)\n\n\nDiseño\nDBCA con arreglo factorial 3 × 3\n\n\nRepeticiones\n4 bloques · 36 parcelas · 360 plantas\n\n\n\n\n\n\n\n📄 Ver tesis completa\n\n\n\n\n\n\n\nFactores\n\nGenotipo (vara yemera): MD-014, MD-015, MD-017\nMétodo de injerto: astilla simple, astilla doble, púa\nTodos sobre un mismo patrón: accesión PER001155\n\n\n\nVariables (a los 105 días)\n\nPorcentaje de brotación\nNúmero de brotes por planta\nLongitud del brote (cm)\nNúmero de hojas por brote\n\n\n\n\n\n\n\n\n\n\n\n\nNotaResultados reportados por el autor\n\n\n\n\nPúa logró 85 % de brotación, frente a 59 % (astilla doble) y 55 % (astilla simple).\nPúa también produjo brotes más largos (13.8 cm en promedio) y con más hojas.\nReportó una interacción genotipo × método en la brotación: con púa, los tres genotipos superaron al resto.\n\n\n\nEn las siguientes pestañas revisamos cómo organizó sus datos y si sus conclusiones se sostienen con un análisis adecuado."
   },
   {
-    "objectID": "index.html#tesis-original",
-    "href": "index.html#tesis-original",
+    "objectID": "index.html#la-tesis-original",
+    "href": "index.html#la-tesis-original",
     "title": "Métodos de injerto en diferentes genotipos y su efecto en la brotación de Myrciaria dubia (camu camu)",
     "section": "",
-    "text": "Autor de la tesis: Andy Richard Reátegui Salazar · UNAP, 2012\n\n\n\n\nDiseño: DBCA con arreglo factorial 3 × 3 (genotipo × método de injerto), 4 bloques, 36 parcelas de 10 plantas.\n\n\nVer tesis completa"
+    "text": "En pocas palabras: la tesis evaluó si el método de injerto (astilla simple, astilla doble o púa) y el genotipo de la vara yemera influyen en la brotación de injertos de camu camu. El ensayo se hizo en San Miguel (Iquitos) entre agosto de 2011 y enero de 2012, y concluyó que el injerto por púa fue el más eficaz.\n\n\n\n\n\n\n\n\n\n\nFicha técnica\n\n\n\n\n\nAutor\nAndy Richard Reátegui Salazar\n\n\nAsesor\nDr. Julio Abel Soplín Ríos\n\n\nUniversidad\nUniversidad Nacional de la Amazonía Peruana (UNAP)\n\n\nAño\n2012\n\n\nLugar\nSan Miguel, Iquitos (Loreto)\n\n\nCultivo\nCamu camu (Myrciaria dubia)\n\n\nDiseño\nDBCA con arreglo factorial 3 × 3\n\n\nRepeticiones\n4 bloques · 36 parcelas · 360 plantas\n\n\n\n\n\n\n\n📄 Ver tesis completa\n\n\n\n\n\n\n\nFactores\n\nGenotipo (vara yemera): MD-014, MD-015, MD-017\nMétodo de injerto: astilla simple, astilla doble, púa\nTodos sobre un mismo patrón: accesión PER001155\n\n\n\nVariables (a los 105 días)\n\nPorcentaje de brotación\nNúmero de brotes por planta\nLongitud del brote (cm)\nNúmero de hojas por brote\n\n\n\n\n\n\n\n\n\n\n\n\nNotaResultados reportados por el autor\n\n\n\n\nPúa logró 85 % de brotación, frente a 59 % (astilla doble) y 55 % (astilla simple).\nPúa también produjo brotes más largos (13.8 cm en promedio) y con más hojas.\nReportó una interacción genotipo × método en la brotación: con púa, los tres genotipos superaron al resto.\n\n\n\nEn las siguientes pestañas revisamos cómo organizó sus datos y si sus conclusiones se sostienen con un análisis adecuado."
+  },
+  {
+    "objectID": "index.html#su-base-de-datos",
+    "href": "index.html#su-base-de-datos",
+    "title": "Métodos de injerto en diferentes genotipos y su efecto en la brotación de Myrciaria dubia (camu camu)",
+    "section": "2. Su base de datos",
+    "text": "2. Su base de datos\nLa tesis presenta los datos originales en el Anexo 5, como tablas cruzadas por variable:\n\n\n\nAnexo 5 de la tesis, con los problemas marcados\n\n\nPara analizarlos en InfoStat armaron otra matriz, el Anexo 7:\n\n\n\nAnexo 7 de la tesis, con los problemas marcados\n\n\nSi intentamos leer esa matriz en R tal como está:\n\n\nVer código\noriginal &lt;- read.csv(\"data/raw/datos_originales_tesis_anexo7.csv\", sep = \";\")\nnames(original)\n\n\n [1] \"Genotipo\"                \"Método.de.Injerto\"      \n [3] \"Tratamiento\"             \"Bloque\"                 \n [5] \"X..Prendi..miento\"       \"X..Prendi..miento.TRANS\"\n [7] \"N..Brotes\"               \"N..Brotes.TRANS\"        \n [9] \"Longitud.de.Brote\"       \"N..Hojas..Brote\"        \n[11] \"N..Hojas..Brote.TRANS\"  \n\n\nVer código\nstr(original[, 5:9])\n\n\n'data.frame':   36 obs. of  5 variables:\n $ X..Prendi..miento      : int  50 50 60 60 60 60 60 70 70 80 ...\n $ X..Prendi..miento.TRANS: chr  \"45,00\" \"45,00\" \"50,77\" \"50,77\" ...\n $ N..Brotes              : chr  \"1\" \"1\" \"1\" \"1\" ...\n $ N..Brotes.TRANS        : chr  \"1,00\" \"1,00\" \"1,00\" \"1,00\" ...\n $ Longitud.de.Brote      : chr  \"13,68\" \"12,68\" \"13,02\" \"10,48\" ...\n\n\nLos nombres de las columnas salen deformados y los números con coma decimal quedan como texto (chr), así que R no puede analizarlos directamente."
+  },
+  {
+    "objectID": "index.html#su-análisis",
+    "href": "index.html#su-análisis",
+    "title": "Métodos de injerto en diferentes genotipos y su efecto en la brotación de Myrciaria dubia (camu camu)",
+    "section": "3. Su análisis",
+    "text": "3. Su análisis\nEl autor transformó el porcentaje con arcoseno y los conteos con raíz cuadrada, y aplicó ANOVA con prueba de Tukey:\n\n\n\nCuadro 5 de la tesis: resumen de los ANOVA"
   }
 ]
