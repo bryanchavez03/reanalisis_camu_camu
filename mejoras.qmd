@@ -47,6 +47,8 @@ datos <- read.csv("data/camu_camu_injertos.csv") |>
 ![Cuadro 6 de la tesis](img/cuadro6_tesis.png)
 
 ```{r}
+#| message: false
+#| warning: false
 m_bin <- glm(
   cbind(plantas_brotadas, plantas_injertadas - plantas_brotadas) ~ bloque + metodo,
   family = binomial, data = datos
@@ -70,6 +72,8 @@ Los dos análisis coinciden en que la púa es superior y en que las astillas no 
 ![Cuadro 9 de la tesis](img/cuadro9_tesis.png)
 
 ```{r}
+#| message: false
+#| warning: false
 m_lon <- lm(longitud_brote_cm ~ bloque + genotipo * metodo, data = datos)
 cld(emmeans(m_lon, ~ metodo), Letters = letters, adjust = "tukey", reversed = TRUE) |>
   as.data.frame() |>
@@ -80,7 +84,7 @@ cld(emmeans(m_lon, ~ metodo), Letters = letters, adjust = "tukey", reversed = TR
 ```
 :::
 
-Aquí los resultados coinciden: los tres métodos difieren entre sí. Pero la media de astilla simple es 11.23 cm y no 11.34 como figura en el cuadro de la tesis.
+Aquí los resultados coinciden: los tres métodos difieren entre sí. Pero la media de astilla simple es 11.23 cm y no 11.34 como figura en el cuadro de la tesis. Como en esta variable la interacción sí es significativa, la comparación entre métodos promedia genotipos que responden distinto; la sección 3 de Reanálisis muestra el detalle por genotipo.
 
 ## 4. Gráfico por gráfico
 
