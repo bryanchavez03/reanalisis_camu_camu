@@ -1,0 +1,32 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Reanálisis Camu Camu"
+  navbar:
+    logo: img/logo-untrm.png
+    logo-alt: "Logo UNTRM"
+    left:
+      - href: index.qmd
+        text: Tesis
+      - href: reanalisis.qmd
+        text: Reanálisis
+      - href: mejoras.qmd
+        text: Mejora
+    right:
+      - text: "Universidad Nacional Toribio Rodríguez de Mendoza"
+  page-footer:
+    background: "#0B2A5B"
+    left: "Chávez · Mendoza · Sánchez - UNTRM, 2026"
+    right: |
+      ![](img/logo-untrm.png){height="50"} ![](img/logo-facultad.png){height="50"}
+
+format:
+  html:
+    theme: [cosmo, custom.scss]
+    toc: true
+    toc-title: "Contenido"
+    code-fold: true
+    code-summary: "Ver código"
+    lang: es

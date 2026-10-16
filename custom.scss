@@ -1,0 +1,37 @@
+/*-- scss:defaults --*/
+$primary: #0B2A5B;
+$link-color: #0B2A5B;
+$navbar-bg: #0B2A5B;
+$navbar-fg: #FFFFFF;
+$navbar-hl: #C9A227;
+
+/*-- scss:rules --*/
+h1, h2, h3 { color: #0B2A5B; }
+h2 { border-bottom: 3px solid #C9A227; padding-bottom: .3rem; }
+.callout-tip { border-left-color: #C9A227 !important; }
+
+.navbar {
+  border-bottom: 4px solid #C9A227;
+}
+.navbar-logo {
+  width: 44px;
+  height: 44px;
+  max-height: none;
+  border-radius: 50%;
+  background: #FFFFFF;
+  padding: 2px;
+}
+.navbar-title {
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.navbar-brand {
+  margin-right: 2.5rem;
+}
+.nav-footer {
+  color: #FFFFFF;
+  border-top: 4px solid #C9A227;
+}
+.nav-footer img {
+  margin-left: .5rem;
+}

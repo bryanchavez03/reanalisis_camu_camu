@@ -1,0 +1,37 @@
+---
+title: "Métodos de injerto en diferentes genotipos y su efecto en la brotación de *Myrciaria dubia* (camu camu)"
+subtitle: "Reanálisis: de una base de datos mal estructurada a un análisis reproducible"
+author:
+  - name: "Bryan Chávez Velaisosa"
+    affiliation: "UNTRM"
+  - name: "Lenin Mendoza Llanos"
+    affiliation: "UNTRM"
+  - name: "Michael Junior Sánchez Carrión"
+    affiliation: "UNTRM"
+date: today
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+library(dplyr)
+library(emmeans)
+
+azul   <- "#0B2A5B"
+dorado <- "#C9A227"
+gris   <- "#6B7280"
+col_gen <- c("MD-014" = azul, "MD-015" = dorado, "MD-017" = gris)
+```
+
+## 1. Tesis Original 
+
+::: {layout="[35,65]"}
+![](img/portada_tesis.png)
+
+**Autor de la tesis:** Andy Richard Reátegui Salazar · UNAP, 2012
+
+**Diseño:** DBCA con arreglo factorial 3 × 3 (genotipo × método de injerto), 4 bloques, 36 parcelas de 10 plantas.
+
+[Ver tesis completa](https://api-repositorio.unapiquitos.edu.pe/server/api/core/bitstreams/36455bbd-36ca-40e0-aa8e-1a7fc9ed3865/content)
+:::
