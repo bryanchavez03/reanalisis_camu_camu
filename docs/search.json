@@ -26,5 +26,89 @@
     "title": "Métodos de injerto en diferentes genotipos y su efecto en la brotación de Myrciaria dubia (camu camu)",
     "section": "3. Su análisis",
     "text": "3. Su análisis\nEl autor transformó el porcentaje con arcoseno y los conteos con raíz cuadrada, y aplicó ANOVA con prueba de Tukey:\n\n\n\nCuadro 5 de la tesis: resumen de los ANOVA"
+  },
+  {
+    "objectID": "reanalisis.html",
+    "href": "reanalisis.html",
+    "title": "Reanálisis estadístico",
+    "section": "",
+    "text": "Reorganizamos los datos en formato tidy: una fila por parcela y una columna por variable.\n\n\n\nBase reestructurada\n\n\n\n\nVer código\ndatos &lt;- read.csv(\"data/camu_camu_injertos.csv\") |&gt;\n  mutate(\n    bloque   = factor(bloque),\n    genotipo = factor(genotipo),\n    metodo   = factor(metodo, levels = c(\"astilla_simple\", \"astilla_doble\", \"pua\")),\n    brotacion_pct = 100 * plantas_brotadas / plantas_injertadas\n  )\nstr(datos)\n\n\n'data.frame':   36 obs. of  10 variables:\n $ parcela           : int  101 102 103 104 105 106 107 108 109 201 ...\n $ bloque            : Factor w/ 4 levels \"1\",\"2\",\"3\",\"4\": 1 1 1 1 1 1 1 1 1 2 ...\n $ genotipo          : Factor w/ 3 levels \"MD-014\",\"MD-015\",..: 1 1 1 2 2 2 3 3 3 1 ...\n $ metodo            : Factor w/ 3 levels \"astilla_simple\",..: 1 2 3 1 2 3 1 2 3 1 ...\n $ plantas_injertadas: int  10 10 10 10 10 10 10 10 10 10 ...\n $ plantas_brotadas  : int  5 6 7 6 5 8 4 5 8 5 ...\n $ brotes_planta     : num  1 2 3.56 1 2 3.22 1 2 2.85 1 ...\n $ longitud_brote_cm : num  13.68 9.98 13.98 8.99 10.59 ...\n $ hojas_brote       : num  10.54 7.2 12.89 8.67 10.68 ...\n $ brotacion_pct     : num  50 60 70 60 50 80 40 50 80 50 ..."
+  },
+  {
+    "objectID": "reanalisis.html#nuestra-base-de-datos",
+    "href": "reanalisis.html#nuestra-base-de-datos",
+    "title": "Reanálisis estadístico",
+    "section": "",
+    "text": "Reorganizamos los datos en formato tidy: una fila por parcela y una columna por variable.\n\n\n\nBase reestructurada\n\n\n\n\nVer código\ndatos &lt;- read.csv(\"data/camu_camu_injertos.csv\") |&gt;\n  mutate(\n    bloque   = factor(bloque),\n    genotipo = factor(genotipo),\n    metodo   = factor(metodo, levels = c(\"astilla_simple\", \"astilla_doble\", \"pua\")),\n    brotacion_pct = 100 * plantas_brotadas / plantas_injertadas\n  )\nstr(datos)\n\n\n'data.frame':   36 obs. of  10 variables:\n $ parcela           : int  101 102 103 104 105 106 107 108 109 201 ...\n $ bloque            : Factor w/ 4 levels \"1\",\"2\",\"3\",\"4\": 1 1 1 1 1 1 1 1 1 2 ...\n $ genotipo          : Factor w/ 3 levels \"MD-014\",\"MD-015\",..: 1 1 1 2 2 2 3 3 3 1 ...\n $ metodo            : Factor w/ 3 levels \"astilla_simple\",..: 1 2 3 1 2 3 1 2 3 1 ...\n $ plantas_injertadas: int  10 10 10 10 10 10 10 10 10 10 ...\n $ plantas_brotadas  : int  5 6 7 6 5 8 4 5 8 5 ...\n $ brotes_planta     : num  1 2 3.56 1 2 3.22 1 2 2.85 1 ...\n $ longitud_brote_cm : num  13.68 9.98 13.98 8.99 10.59 ...\n $ hojas_brote       : num  10.54 7.2 12.89 8.67 10.68 ...\n $ brotacion_pct     : num  50 60 70 60 50 80 40 50 80 50 ..."
+  },
+  {
+    "objectID": "reanalisis.html#porcentaje-de-brotación",
+    "href": "reanalisis.html#porcentaje-de-brotación",
+    "title": "Reanálisis estadístico",
+    "section": "2. Porcentaje de brotación",
+    "text": "2. Porcentaje de brotación\n\nSu método: arcoseno + ANOVA\n\n\nVer código\ndatos$pct_arcoseno &lt;- asin(sqrt(datos$brotacion_pct / 100)) * 180 / pi\nanova(lm(pct_arcoseno ~ bloque + genotipo * metodo, data = datos))\n\n\nAnalysis of Variance Table\n\nResponse: pct_arcoseno\n                Df Sum Sq Mean Sq F value    Pr(&gt;F)    \nbloque           3  460.5  153.49  5.7709  0.004051 ** \ngenotipo         2  125.6   62.78  2.3605  0.115919    \nmetodo           2 3307.2 1653.62 62.1743 3.215e-10 ***\ngenotipo:metodo  4  418.3  104.57  3.9319  0.013588 *  \nResiduals       24  638.3   26.60                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\nNuestro método: GLM binomial\nCada parcela tiene 10 plantas, y cada una brota o no brota. Eso es un dato binomial, y el modelo adecuado es un GLM binomial, no un ANOVA sobre porcentajes transformados.\n\n\nVer código\nm_bin &lt;- glm(\n  cbind(plantas_brotadas, plantas_injertadas - plantas_brotadas) ~\n    bloque + genotipo * metodo,\n  family = binomial, data = datos\n)\nanova(m_bin, test = \"Chisq\")\n\n\nAnalysis of Deviance Table\n\nModel: binomial, link: logit\n\nResponse: cbind(plantas_brotadas, plantas_injertadas - plantas_brotadas)\n\nTerms added sequentially (first to last)\n\n                Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    \nNULL                               35     45.355              \nbloque           3   3.4254        32     41.930    0.3306    \ngenotipo         2   1.0909        30     40.839    0.5796    \nmetodo           2  31.1522        28      9.686 1.719e-07 ***\ngenotipo:metodo  4   3.8184        24      5.868    0.4311    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\n\n\n\nTipHallazgo\n\n\n\nCon el GLM binomial, la interacción genotipo × método deja de ser significativa (p = 0.43; en la tesis, p = 0.014) y el efecto de bloque también desaparece. Solo el método de injerto afecta la brotación.\n\n\n\n\nComparación entre métodos\nComo la interacción no es significativa, ajustamos el modelo solo con bloque y método, y comparamos los métodos entre sí.\n\n\nVer código\nm_bin2 &lt;- glm(\n  cbind(plantas_brotadas, plantas_injertadas - plantas_brotadas) ~\n    bloque + metodo,\n  family = binomial, data = datos\n)\nemm &lt;- emmeans(m_bin2, ~ metodo, type = \"response\")\nemm\n\n\n metodo          prob     SE  df asymp.LCL asymp.UCL\n astilla_simple 0.551 0.0457 Inf     0.460     0.638\n astilla_doble  0.593 0.0451 Inf     0.502     0.677\n pua            0.852 0.0324 Inf     0.777     0.905\n\nResults are averaged over the levels of: bloque \nConfidence level used: 0.95 \nIntervals are back-transformed from the logit scale \n\n\nVer código\npairs(emm)\n\n\n contrast                       odds.ratio     SE  df null z.ratio p.value\n astilla_simple / astilla_doble      0.842 0.2210 Inf    1  -0.656  0.7890\n astilla_simple / pua                0.212 0.0672 Inf    1  -4.896 &lt;0.0001\n astilla_doble / pua                 0.252 0.0802 Inf    1  -4.335 &lt;0.0001\n\nResults are averaged over the levels of: bloque \nP value adjustment: tukey method for comparing a family of 3 estimates \nTests are performed on the log odds ratio scale \n\n\nLa púa tiene una probabilidad de brotación de 0.85, frente a 0.59 de la astilla doble y 0.55 de la astilla simple. Las dos astillas no difieren entre sí (p = 0.79).\n\n\nVer código\nresumen &lt;- datos |&gt;\n  group_by(genotipo, metodo) |&gt;\n  summarise(brotadas = sum(plantas_brotadas),\n            injertadas = sum(plantas_injertadas), .groups = \"drop\") |&gt;\n  mutate(p = brotadas / injertadas,\n         ee = sqrt(p * (1 - p) / injertadas))\n\nggplot(resumen, aes(metodo, p, shape = genotipo)) +\n  geom_pointrange(aes(ymin = p - 1.96 * ee, ymax = pmin(p + 1.96 * ee, 1)),\n                  position = position_dodge(0.4)) +\n  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +\n  labs(x = \"Método de injerto\", y = \"Plantas brotadas\", shape = \"Genotipo\") +\n  theme_classic(base_size = 13)\n\n\n\n\n\nProporción de plantas brotadas por método y genotipo (± IC 95 %)."
+  },
+  {
+    "objectID": "reanalisis.html#longitud-de-brote",
+    "href": "reanalisis.html#longitud-de-brote",
+    "title": "Reanálisis estadístico",
+    "section": "3. Longitud de brote",
+    "text": "3. Longitud de brote\nAquí los datos son continuos y el ANOVA sí es adecuado. Revisamos los supuestos:\n\n\nVer código\nm_lon &lt;- lm(longitud_brote_cm ~ bloque + genotipo * metodo, data = datos)\nanova(m_lon)\n\n\nAnalysis of Variance Table\n\nResponse: longitud_brote_cm\n                Df Sum Sq Mean Sq F value    Pr(&gt;F)    \nbloque           3  1.640   0.547  0.6932   0.56519    \ngenotipo         2  4.117   2.058  2.6105   0.09423 .  \nmetodo           2 81.966  40.983 51.9746 1.897e-09 ***\ngenotipo:metodo  4 32.932   8.233 10.4410 4.811e-05 ***\nResiduals       24 18.924   0.789                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nVer código\nshapiro.test(residuals(m_lon))\n\n\n\n    Shapiro-Wilk normality test\n\ndata:  residuals(m_lon)\nW = 0.99054, p-value = 0.9869\n\n\nEn esta variable coincidimos con la tesis: la interacción genotipo × método sí es significativa (p &lt; 0.001) y los residuos son normales (p = 0.99).\n\n\nVer código\nggplot(datos, aes(metodo, longitud_brote_cm, shape = genotipo, group = genotipo)) +\n  geom_point(position = position_dodge(0.4), size = 2) +\n  stat_summary(fun = mean, geom = \"line\", position = position_dodge(0.4)) +\n  labs(x = \"Método de injerto\", y = \"Longitud de brote (cm)\", shape = \"Genotipo\") +\n  theme_classic(base_size = 13)\n\n\n\n\n\nLongitud de brote por parcela; la línea une las medias de cada genotipo."
+  },
+  {
+    "objectID": "reanalisis.html#número-de-brotes",
+    "href": "reanalisis.html#número-de-brotes",
+    "title": "Reanálisis estadístico",
+    "section": "4. Número de brotes",
+    "text": "4. Número de brotes\n\n\nVer código\ntapply(datos$brotes_planta, datos$metodo, var)\n\n\nastilla_simple  astilla_doble            pua \n      0.000000       0.000000       0.349597 \n\n\nEn astilla simple y astilla doble la varianza es cero: siempre hay 1 y 2 brotes, porque cada astilla lleva 1 o 2 yemas. El número de brotes lo fija el método, no es un resultado del experimento, así que no corresponde analizarlo con ANOVA como hizo la tesis."
+  },
+  {
+    "objectID": "mejoras.html",
+    "href": "mejoras.html",
+    "title": "Mejoras: antes y después",
+    "section": "",
+    "text": "Aspecto\nEn la tesis\nEn nuestra base\n\n\n\n\nFormato\n4 tablas cruzadas, una por variable\nUna tabla: una fila por parcela\n\n\nIdentificación\nSin código de parcela\nColumna parcela (101 a 409)\n\n\nFactores\nCódigos g1, m1, T1\nNombres reales: MD-014, pua\n\n\nTotales\nMezclados con los datos\nSe calculan en R\n\n\nBrotación\nSolo el porcentaje\nPlantas brotadas de 10 injertadas\n\n\nTransformaciones\nGuardadas como columnas\nSe hacen en el código\n\n\nNombres de columna\nCon espacios, símbolos y coma decimal\nSin tildes ni símbolos, punto decimal"
+  },
+  {
+    "objectID": "mejoras.html#la-base-de-datos",
+    "href": "mejoras.html#la-base-de-datos",
+    "title": "Mejoras: antes y después",
+    "section": "",
+    "text": "Aspecto\nEn la tesis\nEn nuestra base\n\n\n\n\nFormato\n4 tablas cruzadas, una por variable\nUna tabla: una fila por parcela\n\n\nIdentificación\nSin código de parcela\nColumna parcela (101 a 409)\n\n\nFactores\nCódigos g1, m1, T1\nNombres reales: MD-014, pua\n\n\nTotales\nMezclados con los datos\nSe calculan en R\n\n\nBrotación\nSolo el porcentaje\nPlantas brotadas de 10 injertadas\n\n\nTransformaciones\nGuardadas como columnas\nSe hacen en el código\n\n\nNombres de columna\nCon espacios, símbolos y coma decimal\nSin tildes ni símbolos, punto decimal"
+  },
+  {
+    "objectID": "mejoras.html#el-análisis",
+    "href": "mejoras.html#el-análisis",
+    "title": "Mejoras: antes y después",
+    "section": "2. El análisis",
+    "text": "2. El análisis\n\n\n\n\n\n\n\n\n\nVariable\nTesis\nNuestro reanálisis\n¿Cambia la conclusión?\n\n\n\n\n% de brotación\nArcoseno + ANOVA: interacción G × M significativa (p = 0.014)\nGLM binomial: interacción no significativa (p = 0.43)\nSí\n\n\nNº de brotes\nRaíz + ANOVA: método significativo\nNo analizable: varianza cero en dos métodos\nSí\n\n\nLongitud de brote\nANOVA: interacción G × M significativa\nANOVA con supuestos verificados: se confirma (p &lt; 0.001)\nNo\n\n\nHojas por brote\nRaíz + ANOVA\nNo la reanalizamos\n—"
+  },
+  {
+    "objectID": "mejoras.html#errores-en-el-texto-de-la-tesis",
+    "href": "mejoras.html#errores-en-el-texto-de-la-tesis",
+    "title": "Mejoras: antes y después",
+    "section": "5. Errores en el texto de la tesis",
+    "text": "5. Errores en el texto de la tesis\nAl revisar los cuadros contra los datos del anexo encontramos:\nEn la tabla de interacción del Cuadro 6, la clave no coincide con la descripción en cuatro filas (m1 = astilla simple, m2 = astilla doble):\n\n\n\nFila\nClave\nDice\nDebería decir\n\n\n\n\n4\ng2m1\nMD-015 + Astilla Doble\nMD-015 + Astilla Simple\n\n\n5\ng1m2\nMD-014 + Astilla Simple\nMD-014 + Astilla Doble\n\n\n7\ng1m1\nMD-014 + Astilla Doble\nMD-014 + Astilla Simple\n\n\n8\ng3m2\nMD-017 + Astilla Simple\nMD-017 + Astilla Doble\n\n\n\nAdemás:\n\nEn el Cuadro 9, la longitud media de astilla simple figura como 11.34 cm; con los datos del anexo es 11.23 cm, que es el valor que cita el texto.\nEn el Cuadro 11, la media de hojas con púa es 11.56; con los datos es 11.52, como dicen las conclusiones."
+  },
+  {
+    "objectID": "mejoras.html#conclusión",
+    "href": "mejoras.html#conclusión",
+    "title": "Mejoras: antes y después",
+    "section": "6. Conclusión",
+    "text": "6. Conclusión\nLa recomendación principal de la tesis se mantiene: el injerto por púa es el mejor método (85 % de brotación frente a 55–59 % de las astillas). Lo que no se sostiene es la interacción genotipo × método en la brotación, que aparece por usar un ANOVA sobre porcentajes de solo 10 plantas, y el análisis del número de brotes, que depende del método por construcción.\nCon los datos organizados en formato tidy, todo el análisis se puede reproducir desde el código de esta página."
+  },
+  {
+    "objectID": "mejoras.html#cuadro-por-cuadro",
+    "href": "mejoras.html#cuadro-por-cuadro",
+    "title": "Mejoras: antes y después",
+    "section": "3. Cuadro por cuadro",
+    "text": "3. Cuadro por cuadro\n\nBrotación (Cuadro 6)\n\nVer código\nm_bin &lt;- glm(\n  cbind(plantas_brotadas, plantas_injertadas - plantas_brotadas) ~ bloque + metodo,\n  family = binomial, data = datos\n)\ncld(emmeans(m_bin, ~ metodo, type = \"response\"),\n    Letters = letters, adjust = \"tukey\", reversed = TRUE) |&gt;\n  as.data.frame() |&gt;\n  transmute(Método = metodo,\n            `Brotación (%)` = round(100 * prob, 1),\n            `IC 95 %` = paste0(round(100 * asymp.LCL, 1), \"–\", round(100 * asymp.UCL, 1)),\n            Grupo = trimws(.group)) |&gt;\n  knitr::kable(row.names = FALSE)\n\n\n\n\n\n\n\nCuadro 6 de la tesis\n\n\n\n\n\nNote: adjust = \"tukey\" was changed to \"sidak\"\nbecause \"tukey\" is only appropriate for one set of pairwise comparisons\n\n\n\n\n\nMétodo\nBrotación (%)\nIC 95 %\nGrupo\n\n\n\n\npua\n85.2\n75.7–91.4\na\n\n\nastilla_doble\n59.3\n48.2–69.5\nb\n\n\nastilla_simple\n55.1\n44.1–65.6\nb\n\n\n\n\n\n\n\nLos dos análisis coinciden en que la púa es superior y en que las astillas no difieren entre sí. La diferencia es que la tesis además presenta una tabla de interacción genotipo × método, que con el modelo adecuado no corresponde, porque esa interacción no es significativa.\n\n\nLongitud de brote (Cuadro 9)\n\nVer código\nm_lon &lt;- lm(longitud_brote_cm ~ bloque + genotipo * metodo, data = datos)\ncld(emmeans(m_lon, ~ metodo), Letters = letters, adjust = \"tukey\", reversed = TRUE) |&gt;\n  as.data.frame() |&gt;\n  transmute(Método = metodo,\n            `Longitud (cm)` = round(emmean, 2),\n            Grupo = trimws(.group)) |&gt;\n  knitr::kable(row.names = FALSE)\n\n\n\n\n\n\n\nCuadro 9 de la tesis\n\n\n\n\n\nNOTE: Results may be misleading due to involvement in interactions\n\n\nNote: adjust = \"tukey\" was changed to \"sidak\"\nbecause \"tukey\" is only appropriate for one set of pairwise comparisons\n\n\n\n\n\nMétodo\nLongitud (cm)\nGrupo\n\n\n\n\npua\n13.77\na\n\n\nastilla_simple\n11.23\nb\n\n\nastilla_doble\n10.17\nc\n\n\n\n\n\n\n\nAquí los resultados coinciden: los tres métodos difieren entre sí. Pero la media de astilla simple es 11.23 cm y no 11.34 como figura en el cuadro de la tesis."
+  },
+  {
+    "objectID": "mejoras.html#gráfico-por-gráfico",
+    "href": "mejoras.html#gráfico-por-gráfico",
+    "title": "Mejoras: antes y después",
+    "section": "4. Gráfico por gráfico",
+    "text": "4. Gráfico por gráfico\n\nEfecto del método (Gráfico 1)\n\nVer código\nemmeans(m_bin, ~ metodo, type = \"response\") |&gt;\n  as.data.frame() |&gt;\n  ggplot(aes(metodo, prob)) +\n  geom_pointrange(aes(ymin = asymp.LCL, ymax = asymp.UCL)) +\n  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +\n  labs(x = \"Método de injerto\", y = \"Brotación (IC 95 %)\") +\n  theme_classic(base_size = 13)\n\n\n\n\n\n\n\nGráfico 1 de la tesis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl eje del gráfico de la tesis empieza en 40 %, lo que hace ver la diferencia más grande de lo que es, y sus barras de error solo van hacia arriba sin indicar qué representan. El nuestro parte de 0 % y muestra el intervalo de confianza completo.\n\n\nInteracción genotipo × método (Gráfico 2)\n\nVer código\ndatos |&gt;\n  group_by(genotipo, metodo) |&gt;\n  summarise(b = sum(plantas_brotadas), n = sum(plantas_injertadas), .groups = \"drop\") |&gt;\n  mutate(p = b / n, ee = sqrt(p * (1 - p) / n)) |&gt;\n  ggplot(aes(genotipo, p, shape = metodo)) +\n  geom_pointrange(aes(ymin = p - 1.96 * ee, ymax = pmin(p + 1.96 * ee, 1)),\n                  position = position_dodge(0.5)) +\n  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +\n  labs(x = \"Genotipo\", y = \"Brotación (IC 95 %)\", shape = \"Método\") +\n  theme_classic(base_size = 13)\n\n\n\n\n\n\n\nGráfico 2 de la tesis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl gráfico de la tesis une los genotipos con líneas, como si fueran una secuencia, y no muestra el error. Al agregar los intervalos se ve que, para cada genotipo, las dos astillas se superponen y solo la púa se separa. Por eso no hay interacción: el efecto del método es el mismo en los tres genotipos."
   }
 ]

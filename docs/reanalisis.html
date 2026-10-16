@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Reanálisis estadístico – Reanálisis Camu Camu</title>
+<title>Reanálisis estadístico</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -42,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d01305c6002c65233af6c1e3b513d2af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-89554284a4097b124a29e91811425c77.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -85,9 +120,6 @@ ul.task-list li input[type="checkbox"] {
     <img src="./img/logo-untrm.png" alt="Logo UNTRM" class="navbar-logo light-content">
     <img src="./img/logo-untrm.png" alt="Logo UNTRM" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Reanálisis Camu Camu</span>
-    </a>
   </div>
             <div id="quarto-search" class="" title="Buscar"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -125,8 +157,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#nuestra-base-de-datos" id="toc-nuestra-base-de-datos" class="nav-link active" data-scroll-target="#nuestra-base-de-datos">1. Nuestra base de datos</a></li>
+  <li><a href="#porcentaje-de-brotación" id="toc-porcentaje-de-brotación" class="nav-link" data-scroll-target="#porcentaje-de-brotación">2. Porcentaje de brotación</a>
+  <ul class="collapse">
+  <li><a href="#su-método-arcoseno-anova" id="toc-su-método-arcoseno-anova" class="nav-link" data-scroll-target="#su-método-arcoseno-anova">Su método: arcoseno + ANOVA</a></li>
+  <li><a href="#nuestro-método-glm-binomial" id="toc-nuestro-método-glm-binomial" class="nav-link" data-scroll-target="#nuestro-método-glm-binomial">Nuestro método: GLM binomial</a></li>
+  <li><a href="#comparación-entre-métodos" id="toc-comparación-entre-métodos" class="nav-link" data-scroll-target="#comparación-entre-métodos">Comparación entre métodos</a></li>
+  </ul></li>
+  <li><a href="#longitud-de-brote" id="toc-longitud-de-brote" class="nav-link" data-scroll-target="#longitud-de-brote">3. Longitud de brote</a></li>
+  <li><a href="#número-de-brotes" id="toc-número-de-brotes" class="nav-link" data-scroll-target="#número-de-brotes">4. Número de brotes</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -150,8 +196,251 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="nuestra-base-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="nuestra-base-de-datos">1. Nuestra base de datos</h2>
+<p>Reorganizamos los datos en <strong>formato tidy</strong>: una fila por parcela y una columna por variable.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/despues_base_tidy.png" class="img-fluid figure-img"></p>
+<figcaption>Base reestructurada</figcaption>
+</figure>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/camu_camu_injertos.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">bloque   =</span> <span class="fu">factor</span>(bloque),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">genotipo =</span> <span class="fu">factor</span>(genotipo),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">metodo   =</span> <span class="fu">factor</span>(metodo, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"astilla_simple"</span>, <span class="st">"astilla_doble"</span>, <span class="st">"pua"</span>)),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">brotacion_pct =</span> <span class="dv">100</span> <span class="sc">*</span> plantas_brotadas <span class="sc">/</span> plantas_injertadas</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(datos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   36 obs. of  10 variables:
+ $ parcela           : int  101 102 103 104 105 106 107 108 109 201 ...
+ $ bloque            : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 1 1 1 1 2 ...
+ $ genotipo          : Factor w/ 3 levels "MD-014","MD-015",..: 1 1 1 2 2 2 3 3 3 1 ...
+ $ metodo            : Factor w/ 3 levels "astilla_simple",..: 1 2 3 1 2 3 1 2 3 1 ...
+ $ plantas_injertadas: int  10 10 10 10 10 10 10 10 10 10 ...
+ $ plantas_brotadas  : int  5 6 7 6 5 8 4 5 8 5 ...
+ $ brotes_planta     : num  1 2 3.56 1 2 3.22 1 2 2.85 1 ...
+ $ longitud_brote_cm : num  13.68 9.98 13.98 8.99 10.59 ...
+ $ hojas_brote       : num  10.54 7.2 12.89 8.67 10.68 ...
+ $ brotacion_pct     : num  50 60 70 60 50 80 40 50 80 50 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="porcentaje-de-brotación" class="level2">
+<h2 class="anchored" data-anchor-id="porcentaje-de-brotación">2. Porcentaje de brotación</h2>
+<section id="su-método-arcoseno-anova" class="level3">
+<h3 class="anchored" data-anchor-id="su-método-arcoseno-anova">Su método: arcoseno + ANOVA</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>pct_arcoseno <span class="ot">&lt;-</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(datos<span class="sc">$</span>brotacion_pct <span class="sc">/</span> <span class="dv">100</span>)) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(pct_arcoseno <span class="sc">~</span> bloque <span class="sc">+</span> genotipo <span class="sc">*</span> metodo, <span class="at">data =</span> datos))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: pct_arcoseno
+                Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+bloque           3  460.5  153.49  5.7709  0.004051 ** 
+genotipo         2  125.6   62.78  2.3605  0.115919    
+metodo           2 3307.2 1653.62 62.1743 3.215e-10 ***
+genotipo:metodo  4  418.3  104.57  3.9319  0.013588 *  
+Residuals       24  638.3   26.60                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="nuestro-método-glm-binomial" class="level3">
+<h3 class="anchored" data-anchor-id="nuestro-método-glm-binomial">Nuestro método: GLM binomial</h3>
+<p>Cada parcela tiene <strong>10 plantas</strong>, y cada una brota o no brota. Eso es un dato <strong>binomial</strong>, y el modelo adecuado es un GLM binomial, no un ANOVA sobre porcentajes transformados.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>m_bin <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(plantas_brotadas, plantas_injertadas <span class="sc">-</span> plantas_brotadas) <span class="sc">~</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    bloque <span class="sc">+</span> genotipo <span class="sc">*</span> metodo,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial, <span class="at">data =</span> datos</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_bin, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: cbind(plantas_brotadas, plantas_injertadas - plantas_brotadas)
+
+Terms added sequentially (first to last)
+
+                Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
+NULL                               35     45.355              
+bloque           3   3.4254        32     41.930    0.3306    
+genotipo         2   1.0909        30     40.839    0.5796    
+metodo           2  31.1522        28      9.686 1.719e-07 ***
+genotipo:metodo  4   3.8184        24      5.868    0.4311    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hallazgo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con el GLM binomial, la interacción genotipo × método deja de ser significativa (p = 0.43; en la tesis, p = 0.014) y el efecto de bloque también desaparece. Solo el método de injerto afecta la brotación.</p>
+</div>
+</div>
+</section>
+<section id="comparación-entre-métodos" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-entre-métodos">Comparación entre métodos</h3>
+<p>Como la interacción no es significativa, ajustamos el modelo solo con bloque y método, y comparamos los métodos entre sí.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>m_bin2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(plantas_brotadas, plantas_injertadas <span class="sc">-</span> plantas_brotadas) <span class="sc">~</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    bloque <span class="sc">+</span> metodo,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial, <span class="at">data =</span> datos</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bin2, <span class="sc">~</span> metodo, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>emm</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> metodo          prob     SE  df asymp.LCL asymp.UCL
+ astilla_simple 0.551 0.0457 Inf     0.460     0.638
+ astilla_doble  0.593 0.0451 Inf     0.502     0.677
+ pua            0.852 0.0324 Inf     0.777     0.905
+
+Results are averaged over the levels of: bloque 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale </code></pre>
+</div>
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(emm)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast                       odds.ratio     SE  df null z.ratio p.value
+ astilla_simple / astilla_doble      0.842 0.2210 Inf    1  -0.656  0.7890
+ astilla_simple / pua                0.212 0.0672 Inf    1  -4.896 &lt;0.0001
+ astilla_doble / pua                 0.252 0.0802 Inf    1  -4.335 &lt;0.0001
+
+Results are averaged over the levels of: bloque 
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log odds ratio scale </code></pre>
+</div>
+</div>
+<p>La púa tiene una probabilidad de brotación de 0.85, frente a 0.59 de la astilla doble y 0.55 de la astilla simple. Las dos astillas no difieren entre sí (p = 0.79).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genotipo, metodo) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">brotadas =</span> <span class="fu">sum</span>(plantas_brotadas),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">injertadas =</span> <span class="fu">sum</span>(plantas_injertadas), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> brotadas <span class="sc">/</span> injertadas,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ee =</span> <span class="fu">sqrt</span>(p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p) <span class="sc">/</span> injertadas))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(resumen, <span class="fu">aes</span>(metodo, p, <span class="at">shape =</span> genotipo)) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> p <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> ee, <span class="at">ymax =</span> <span class="fu">pmin</span>(p <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> ee, <span class="dv">1</span>)),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.4</span>)) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Método de injerto"</span>, <span class="at">y =</span> <span class="st">"Plantas brotadas"</span>, <span class="at">shape =</span> <span class="st">"Genotipo"</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="reanalisis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Proporción de plantas brotadas por método y genotipo (± IC 95 %).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="longitud-de-brote" class="level2">
+<h2 class="anchored" data-anchor-id="longitud-de-brote">3. Longitud de brote</h2>
+<p>Aquí los datos son continuos y el ANOVA sí es adecuado. Revisamos los supuestos:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m_lon <span class="ot">&lt;-</span> <span class="fu">lm</span>(longitud_brote_cm <span class="sc">~</span> bloque <span class="sc">+</span> genotipo <span class="sc">*</span> metodo, <span class="at">data =</span> datos)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_lon)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: longitud_brote_cm
+                Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+bloque           3  1.640   0.547  0.6932   0.56519    
+genotipo         2  4.117   2.058  2.6105   0.09423 .  
+metodo           2 81.966  40.983 51.9746 1.897e-09 ***
+genotipo:metodo  4 32.932   8.233 10.4410 4.811e-05 ***
+Residuals       24 18.924   0.789                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(m_lon))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  residuals(m_lon)
+W = 0.99054, p-value = 0.9869</code></pre>
+</div>
+</div>
+<p>En esta variable coincidimos con la tesis: la interacción genotipo × método sí es significativa (p &lt; 0.001) y los residuos son normales (p = 0.99).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(metodo, longitud_brote_cm, <span class="at">shape =</span> genotipo, <span class="at">group =</span> genotipo)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.4</span>), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.4</span>)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Método de injerto"</span>, <span class="at">y =</span> <span class="st">"Longitud de brote (cm)"</span>, <span class="at">shape =</span> <span class="st">"Genotipo"</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="reanalisis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Longitud de brote por parcela; la línea une las medias de cada genotipo.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="número-de-brotes" class="level2">
+<h2 class="anchored" data-anchor-id="número-de-brotes">4. Número de brotes</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(datos<span class="sc">$</span>brotes_planta, datos<span class="sc">$</span>metodo, var)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>astilla_simple  astilla_doble            pua 
+      0.000000       0.000000       0.349597 </code></pre>
+</div>
+</div>
+<p>En astilla simple y astilla doble la varianza es <strong>cero</strong>: siempre hay 1 y 2 brotes, porque cada astilla lleva 1 o 2 yemas. El número de brotes lo fija el método, no es un resultado del experimento, así que no corresponde analizarlo con ANOVA como hizo la tesis.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

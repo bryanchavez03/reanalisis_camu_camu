@@ -1,18 +1,9 @@
 /*-- scss:defaults --*/
 $primary: #0B2A5B;
-$link-color: #0B2A5B;
 $navbar-bg: #0B2A5B;
 $navbar-fg: #FFFFFF;
-$navbar-hl: #C9A227;
 
 /*-- scss:rules --*/
-h1, h2, h3 { color: #0B2A5B; }
-h2 { border-bottom: 3px solid #C9A227; padding-bottom: .3rem; }
-.callout-tip { border-left-color: #C9A227 !important; }
-
-.navbar {
-  border-bottom: 4px solid #C9A227;
-}
 .navbar-logo {
   width: 44px;
   height: 44px;
@@ -21,33 +12,6 @@ h2 { border-bottom: 3px solid #C9A227; padding-bottom: .3rem; }
   background: #FFFFFF;
   padding: 2px;
 }
-.navbar-title {
-  font-weight: 700;
-  letter-spacing: .5px;
-}
 .navbar-brand {
   margin-right: 2.5rem;
-}
-.nav-footer {
-  color: #FFFFFF;
-  border-top: 4px solid #C9A227;
-}
-.nav-footer img {
-  margin-left: .5rem;
-}
-.resumen {
-  background: #F5F7FA;
-  border-left: 6px solid #C9A227;
-  padding: 1rem 1.25rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  font-size: 1.05rem;
-}
-.portada {
-  border-radius: 6px;
-  box-shadow: 0 4px 14px rgba(11, 42, 91, .25);
-}
-table th {
-  background: #0B2A5B;
-  color: #FFFFFF;
 }
